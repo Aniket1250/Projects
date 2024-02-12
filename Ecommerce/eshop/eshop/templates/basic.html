@@ -10,12 +10,12 @@
 
     <title>{% block title%}{{request.user.first_name}} Sir Welcome To Eshop {% endblock %}</title>
      <style>
-       {% block css %}
-        {% endblock %}
+      {% block css %}
+      {% endblock %}
   </style>
   </head>
   <body>
-
+{% block nav %}
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <a class="navbar-brand" href="#">My Awesome Cart</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -36,11 +36,14 @@
       <li class="nav-item">
         <a class="nav-link" href="/contact">Contact Us</a>
       </li>  
+      <!-- <li class="nav-item">
+        <a class="nav-link" href="/myorder">Myorders</a>
+      </li>  -->
     </ul>
-    <form class="form-inline my-2 my-lg-0">
+    <!-- <form class="form-inline my-2 my-lg-0">
       <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form>
+    </form> -->
     <button type="button" id="popcart" class="btn btn-secondary mx-2" data-bs-container="body" data-bs-toggle="popover" data-placement="bottom" data-html="true" data-bs-content="Bottom popover">
         Cart(<span id="cart">0</span>)
       </button>
@@ -51,8 +54,10 @@
   {% endif %}
   </div>
 </nav>
-
-  {% block body %} {% endblock %}
+{% endblock %}
+  {% block body %} 
+ 
+  {% endblock %}
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

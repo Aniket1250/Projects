@@ -1,0 +1,30 @@
+
+{% extends 'base.html' %}
+
+{% block body %}
+<div class="container mt-4">
+    <h2 class="mb-4">Department Hierarchy - {{ department.name }}</h2>
+
+    {% if hierarchy.manager %}
+        <h4>{{ hierarchy.manager.employee.name }} - {{ hierarchy.manager.employee.designation }}</h4>
+        <ul>
+            {% for subordinate in hierarchy.manager.subordinates %}
+                <li>{{ subordinate.name }} - {{ subordinate.designation }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No manager found for this department.</p>
+    {% endif %}
+
+    {% for tl_id, tl_data in hierarchy.items %}
+        {% if tl_id != 'manager' %}
+            <h4>{{ tl_data.employee.name }} - {{ tl_data.employee.designation }}</h4>
+            <ul>
+                {% for subordinate in tl_data.subordinates %}
+                    <li>{{ subordinate.name }} - {{ subordinate.designation }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endfor %}
+</div>
+{% endblock %}

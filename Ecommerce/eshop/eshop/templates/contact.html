@@ -1,6 +1,46 @@
 {% extends 'basic.html' %}
 
 {% block title%} Contact Us - My Awesome Cart{% endblock %}
+{% block nav %}
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">My Awesome Cart</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item ">
+        <a class="nav-link" href="/home">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/about">About</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/tracker">Tracker</a>
+      </li> 
+      <li class="nav-item active">
+        <a class="nav-link" href="/contact">Contact Us</a>
+      </li>  
+      <!-- <li class="nav-item">
+        <a class="nav-link" href="/myorder">Myorders</a>
+      </li>  -->
+    </ul>
+    <!-- <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form> -->
+    <button type="button" id="popcart" class="btn btn-secondary mx-2" data-bs-container="body" data-bs-toggle="popover" data-placement="bottom" data-html="true" data-bs-content="Bottom popover">
+        Cart(<span id="cart">0</span>)
+      </button>
+      {% if request.user.is_authenticated %}
+      <a href="/logout"><button class="btn btn-outline-success">Logout</button></a>
+  {% else %}
+      <a href="/"><button class="btn btn-outline-success">Login</button></a>
+  {% endif %}
+  </div>
+</nav>
+{% endblock %}
 {% block body %}
 <div class="container my-3">
     <h3>Contact Us</h3>
@@ -18,7 +58,6 @@
     <label for="name">Phone</label>
     <input type="tel" class="form-control" id="phone" name='phone' placeholder="Enter Your Phone Number">
   </div>
-
 
    <div class="form-group">
     <label for="desc">How May We Help You?</label>

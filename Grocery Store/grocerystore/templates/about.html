@@ -1,0 +1,166 @@
+{% extends 'base.html' %}
+
+{% block title %} About Awesome Cart{% endblock %}
+
+{% block navblock %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">AS Store</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="/about">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/stock">Stock</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/add">Add Models</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Category
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/category/Vegetables">Vegitables</a></li>
+                        <li><a class="dropdown-item" href="/category/Fruits">Fruits</a></li>
+                        <li><a class="dropdown-item" href="/category/Tea">Tea</a></li>
+                        <li><a class="dropdown-item" href="#">Chocolates</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <input type="hidden" id="data" name="data">
+            <form method="" class="d-flex" role="search">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+            <input type="hidden" id="data" name="data">
+            <a href="/checkout"><button type="submit" id="popcart" class="btn btn-secondary mx-2" data-bs-container="body" data-bs-toggle="popover" data-placement="bottom" data-html="true" data-bs-content="Bottom popover">
+                Cart(<span id="cart">0</span>)
+            </button></a>
+        </div>
+    </div>
+</nav>{% endblock %}
+
+{% block maincontent %} 
+<main>
+
+    <div id="myCarousel" class="carousel slide mb-6" data-bs-ride="carousel">
+        <!-- Carousel Indicators -->
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+
+        <!-- Carousel Inner -->
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="https://picsum.photos/1200/400" class="d-block w-100" alt="First slide">
+                <div class="container">
+                    <div class="carousel-caption text-start">
+                        <h1>Welcome to Awesome Cart</h1>
+                        <p class="opacity-75">Your one-stop destination for all your shopping needs.</p>
+                        <p><a class="btn btn-lg btn-primary" href="/">Shop Now</a></p>
+                    </div>
+                </div>
+            </div>
+            <!-- Add more carousel items with images and captions as needed -->
+        </div>
+
+        <!-- Carousel Controls -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+    <!-- Marketing messaging and featurettes -->
+    <div class="container marketing">
+        <!-- Introduction Section -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h2 class="featurette-heading text-center">About Awesome Cart</h2>
+                <p class="lead text-center">Awesome Cart is your go-to online marketplace, offering a wide range of products at unbeatable prices.</p>
+            </div>
+        </div>
+
+        <!-- Three columns of text below the carousel -->
+        <div class="row">
+            <!-- Add your own content and images for each column -->
+            <div class="col-lg-4">
+                <img src="https://picsum.photos/140/140" class="bd-placeholder-img rounded-circle" width="140" height="140" alt="Product 1">
+                <h2 class="fw-normal">Quality Products</h2>
+                <p>Discover a curated selection of high-quality products from top brands.</p>
+                <p><a class="btn btn-secondary" href="#">Explore Products &raquo;</a></p>
+            </div>
+            <div class="col-lg-4">
+                <img src="https://picsum.photos/140/140" class="bd-placeholder-img rounded-circle" width="140" height="140" alt="Product 2">
+                <h2 class="fw-normal">Easy Shopping</h2>
+                <p>Enjoy a seamless shopping experience with our user-friendly interface.</p>
+                <p><a class="btn btn-secondary" href="#">Start Shopping &raquo;</a></p>
+            </div>
+            <div class="col-lg-4">
+                <img src="https://picsum.photos/140/140" class="bd-placeholder-img rounded-circle" width="140" height="140" alt="Product 3">
+                <h2 class="fw-normal">Secure Transactions</h2>
+                <p>Shop with confidence knowing that your transactions are secure and protected.</p>
+                <p><a class="btn btn-secondary" href="#">Learn More &raquo;</a></p>
+            </div>
+        </div>
+
+        <!-- Featured Products Section -->
+        <hr class="featurette-divider">
+        <h2 class="featurette-heading text-center">Featured Products</h2>
+        <div class="row featurette">
+            <!-- Add featured product content and images as needed -->
+            <div class="col-md-7">
+                <h2 class="featurette-heading fw-normal lh-1">Latest Technology Gadgets. <span class="text-body-secondary">Stay ahead with innovation.</span></h2>
+                <p class="lead">Explore our collection of cutting-edge gadgets that will elevate your lifestyle.</p>
+            </div>
+            <div class="col-md-5">
+                <img src="https://picsum.photos/500/500" class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" alt="Featured Product 1">
+            </div>
+        </div>
+
+        <!-- Add more featured product sections as needed -->
+
+        <!-- Testimonials Section -->
+        <hr class="featurette-divider">
+        <h2 class="featurette-heading text-center">What Our Customers Say</h2>
+        <div class="row featurette">
+            <div class="col-md-12">
+                <blockquote class="blockquote text-center">
+                    <p class="mb-0">"Awesome Cart has transformed my online shopping experience. The variety of products and the ease of use make it my favorite destination for shopping online."</p>
+                    <footer class="blockquote-footer">Happy Customer</footer>
+                </blockquote>
+            </div>
+        </div>
+
+        <!-- Add more testimonials as needed -->
+
+    </div><!-- /.container -->
+
+    <!-- FOOTER -->
+    <footer class="container">
+        <p class="float-end"><a href="#">Back to top</a></p>
+        <p>&copy; 2017–2023 Awesome Cart, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
+    </footer>
+</main>
+
+{% endblock %}

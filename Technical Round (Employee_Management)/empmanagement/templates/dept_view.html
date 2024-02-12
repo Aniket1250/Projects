@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block head %}
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+
+{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <h2 class="mb-4">Department Details</h2>
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">{{ department.name }}</h5>
+
+            <span class="crud">
+                <a href="{% url 'edit_department' department.id %}" class="btn btn-secondary">Edit</a>
+
+                <button id="deleteDepartment" class="btn btn-danger">Delete</button>
+            </span>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="deleteDepartmentConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="deleteDepartmentConfirmationModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteDepartmentConfirmationModalLabel">Confirm Delete</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete this department?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <a href="{% url 'delete_department' department.id %}" class="btn btn-danger">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $(document).ready(function () {
+
+        $('#deleteDepartment').on('click', function() {
+
+            $('#deleteDepartmentConfirmationModal').modal('show');
+        });
+    });
+</script>
+
+{% endblock %}

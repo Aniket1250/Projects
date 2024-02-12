@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% block navblock %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">AS Store</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="/">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/stock">Stock</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="/addproducts">Add Products</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Category
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="/category/Vegetables">Vegitables</a></li>
+              <li><a class="dropdown-item" href="/category/Fruits">Fruits</a></li>
+              <li><a class="dropdown-item" href="/category/Tea">Tea</a></li>
+              <li><a class="dropdown-item" href="#">Chocolates</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="#">Something else here</a></li>
+            </ul>
+          </li>
+        </ul>
+        
+        <form class="d-flex" role="search">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+  </nav>{% endblock %}
+
+  {% block maincontent %}
+  {% if success %}
+ <div class="alert alert-warning alert-dismissible fade show" role="alert">
+  <strong>Hurrah..!</strong>Your product is added to store Successfully.
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>{% endif %}
+  <div class="container mt-5">
+    <h2 class="mb-4">Add Product</h2>
+
+    <form action="/add" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label for="productName">Product Name</label>
+            <input type="text" class="form-control" id="productName" name="name" required>
+        </div>
+        <br>
+        <div class="form-group">
+            <label for="productDesc">Product Description</label>
+            <textarea class="form-control" id="productDesc" name="desc" rows="3" required></textarea>
+        </div>
+        <br>
+        <div class="form-group">
+            <label for="productPrice">Product Price</label>
+            <input type="number" class="form-control" id="productPrice" name="price" required>
+        </div>
+        <br>
+        <div class="form-group">
+            <label for="productCategory">Product Category</label>
+            <input type="text" class="form-control" id="productCategory" name="category" required>
+        </div>
+        <br>
+        <div class="form-group">
+          <label for="productCategory">Stock</label>
+          <input type="text" class="form-control" id="productCategory" name="stock" required>
+      </div>
+      <br>
+      <div class="form-group">
+        <label for="productCategory">Quantity</label>
+        <select class="form-control" id="productCategory" name="quantity" required>
+            <option value="dozen">Dozen</option>
+            <option value="kilogram">Kilogram</option>
+            <option value="each">Each</option>
+            <option value="liter">Liter</option>
+        </select>
+    </div>
+    <br>
+
+        <div class="form-group">
+            <label for="productImage">Product Image</label>
+            <input type="file" class="form-control-file" id="productImage" name="image" accept="image/*" required>
+        </div>
+        <br>
+        <button type="submit" class="btn btn-primary">Add Product</button>
+    </form>
+</div>
+  
+  {% endblock %}

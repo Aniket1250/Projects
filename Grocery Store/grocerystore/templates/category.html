@@ -1,0 +1,187 @@
+{% extends 'base.html' %}
+{% block title %} {% endblock %}
+{% load static %}
+{% block navblock %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">AS Store</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/about">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/stock">Stock</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/add">Add Models</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Category
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/category/Vegetables">Vegitables</a></li>
+                        <li><a class="dropdown-item" href="/category/Fruits">Fruits</a></li>
+                        <li><a class="dropdown-item" href="/category/Tea">Tea</a></li>
+                        <li><a class="dropdown-item" href="#">Chocolates</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <input type="hidden" id="data" name="data">
+            <form method="" class="d-flex" role="search">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+            <input type="hidden" id="data" name="data">
+            <a href="/checkout"><button type="submit" id="popcart" class="btn btn-secondary mx-2" data-bs-container="body" data-bs-toggle="popover" data-placement="bottom" data-html="true" data-bs-content="Bottom popover">
+                Cart(<span id="cart">0</span>)
+            </button></a>
+        </div>
+    </div>
+</nav>{% endblock %}
+{% block maincontent %}
+<main>
+    
+    <div class="album py-5 bg-body-tertiary">
+        <div class="container">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                {% for product in products %}
+                <div class="col">
+                    <div class="card shadow-sm">
+                        <div class="card-body position-relative">
+                            <img src='/{{product.image}}' alt="Product Image" class="card-img-top"
+                                style="width: 100%; height: 225px; object-fit: cover;">
+                            <span class="badge bg-success position-absolute top-0 end-0 fs-4">₹{{ product.price }}</span>
+                            <p class="card-text">{{ product.desc|slice:'0:100' }}...</p>
+                            <div class="d-flex justify-content-between align-items-center" style="height: 80px;">
+                                <div class="btn-group">
+                                    <div class="input-group">
+                                        <label class="input-group-text" for="quantityInput" style="font-size: 14px;">Quantity</label>
+                                        <input type="text" id="qty{{product.id}}" name="qty" style="width: 40px; font-size: 12px;">
+                                        <select class="form-select" id="quantityDropdown{{ product.id }}">
+                                            {% if product.category == 'Vegetables' or product.category == 'Tea'  %}
+                                                <option value="kg">kg</option>
+                                            {% else %}
+                                                <option value="each">each</option>
+                                            {% endif %}
+                                        </select>
+                                        <button type="button" class="btn btn-sm btn-outline-danger mx-2 my-2" onclick="removeFromCart('{{ product.id }}')" style="font-size: 12px;">Remove from Cart</button>
+                                    </div>
+                                    <button type="button" class="btn btn-sm btn-outline-secondary mx-2" onclick="addToCart('{{ product.id }}', '{{ product.name }}', {{ product.price }} , '{{ product.category }}', document.getElementById('qty{{product.id}}').value)" style="font-size: 12px;">Add To Cart</button>
+                                </div>
+                                <h4><small class="text-body-secondary" style="font-size: 15px;">{{ product.name }}</small></h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                {% endfor %}
+            </div>
+        </div>
+        
+    </div>
+</main>
+{% endblock %}
+{% block jsblock %}
+<script>
+    // Define addToCart function globally
+    function addToCart(productId, productName, productPrice, productCategory, quantity) {
+        if (quantity.trim() === "") {
+            alert("Please enter a valid quantity.");
+            return; // Stop execution if quantity is empty
+        }
+
+        // Retrieve existing cart from localStorage or create an empty one
+        if (localStorage.getItem('cart') == null) {
+            var cart = {};
+        } else {
+            cart = JSON.parse(localStorage.getItem('cart'));
+        }   
+    
+        // Check if the product is already in the cart
+        if (cart[productId]) {
+            // Add the new quantity to the existing quantity
+            cart[productId].quantity += parseInt(quantity);
+        } else {
+            // Add the product to the cart with the given quantity
+            cart[productId] = {
+                quantity: parseInt(quantity),
+                name: productName,
+                price: productPrice,
+                category: productCategory
+            };
+        }
+    
+        // Calculate total based on quantity and price
+        cart[productId].total = cart[productId].quantity * productPrice;
+    
+        // Save the updated cart to localStorage
+        localStorage.setItem('cart', JSON.stringify(cart));
+    
+        // Update the cart length displayed on the navigation button
+        updateCartLength();
+    
+        // Update the value of the #data input box with the latest cart data
+        updateDataInput();
+    }
+    
+
+    // Define updateCartLength function globally
+    function updateCartLength() {
+        // Retrieve the current cart from localStorage
+        var cart = JSON.parse(localStorage.getItem('cart')) || {};
+
+        // Calculate the number of unique product IDs in the cart
+        var uniqueProductCount = Object.keys(cart).length;
+
+        // Display the unique product count on the cart button
+        document.getElementById('cart').innerText = uniqueProductCount;
+
+        // Update the value of the #data input box with the latest cart data
+        updateDataInput();
+    }
+
+    // Define updateDataInput function globally
+    function updateDataInput() {
+        var cart = JSON.parse(localStorage.getItem('cart'));
+        document.getElementById('data').value = JSON.stringify(cart);
+        console.log('Updated data input:', document.getElementById('data').value);
+    }
+
+    
+    // Call updateCartLength when the page loads to initialize the cart length
+    updateCartLength();
+
+    function removeFromCart(productId) {
+        // Retrieve the current cart from localStorage
+        var cart = JSON.parse(localStorage.getItem('cart')) || {};
+    
+        // Remove the item from the cart
+        delete cart[productId];
+    
+        // Save the updated cart to localStorage
+        localStorage.setItem('cart', JSON.stringify(cart));
+    
+        // Update the cart length displayed on the navigation button
+        updateCartLength();
+    
+        // Update the value of the #data input box with the latest cart data
+        updateDataInput();
+    
+        // Redraw the cart items display
+        displayCartItems();
+    }</script>
+    {% endblock %}

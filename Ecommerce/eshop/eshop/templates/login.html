@@ -1,6 +1,7 @@
 {% extends 'basic.html' %}
 {% block body %}
 <hr>
+<div class="container">
 <form method="post" action="">{% csrf_token %}
     <h2>Login</h2>
     {% if messages %}
@@ -24,5 +25,5 @@
     <button type="submit" class="btn btn-primary">Submit</button>
     <hr>
   </form>
-  
+</div>
   {% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block head %}
+
+{% endblock %}
+{% block body %}
+<div class="container mt-4">
+    <h2 class="mb-4">Salary Report</h2>
+
+    {% if department_salary_dict %}
+        <table id="salaryReportTable" class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Salary</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for department, total_salary in department_salary_dict.items %}
+                    <tr>
+                        <td>{{ department }}</td>
+                        <td>{{ total_salary }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No data available for the selected date range.</p>
+    {% endif %}
+</div>
+{% endblock %}
+{% block js %}{% endblock %}

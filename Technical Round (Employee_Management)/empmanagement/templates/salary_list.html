@@ -1,0 +1,53 @@
+
+{% extends 'base.html' %}
+
+{% block head %}
+<style>
+
+    .container {
+        margin-top: 20px;
+    }
+
+    .button-container {
+        margin-bottom: 20px;
+    }
+
+    .crud-button {
+        margin-right: 10px;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="button-container">
+        <a href="{% url 'add_salary_entry' %}">
+            <button type="button" class="btn btn-primary">
+                <span class="button__text">Add Salary Entry</span>
+                <span class="button__icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke="currentColor" height="24" fill="none" class="svg">
+                        <line y2="19" y1="5" x2="12" x1="12"></line>
+                        <line y2="12" y1="12" x2="19" x1="5"></line>
+                    </svg>
+                </span>
+            </button>
+            <a href="/salary/report"><button>Salary Report</button></a>
+        </a>
+    </div>
+
+    <h3>Salary Entries</h3>
+
+    <ul class="list-group">
+        {% for entry in salary_entries %}
+            <li class="list-group-item">
+                {{ entry.employee.name }} - {{ entry.salary }} - {{ entry.start_date }} To {{ entry.end_date }}
+                
+                    <a href="{% url 'salary_detail' entry.id %}" class="btn btn-primary">Details</a>
+                
+                    <a href="{% url 'edit_salary_entry' entry.id %}" class="btn btn-secondary">Edit</a>
+               
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

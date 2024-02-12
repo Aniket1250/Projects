@@ -53,12 +53,6 @@ def logout_page(request):
     return redirect('/')
 
 
-
-
-
-
-
-
 @login_required(login_url='/')
 def home(request):
     # product=Product.objects.all()
@@ -93,10 +87,11 @@ def home(request):
         products_by_category[category].append(product)
 
     allProds = []
-
+    print(products_by_category)
     for category, product in products_by_category.items():
         n = len(product)
-        nSlides = n // 4 + ceil((n / 4) - (n // 4))
+        # nSlides = n // 4 + ceil((n / 4) - (n // 4))
+        nSlides = ceil(n/4)
         allProds.append([product, range(1, nSlides), nSlides])        
 
     params={'allProds':allProds }
@@ -138,9 +133,6 @@ def tracker(request):
 
     return render(request, 'tracker.html')
 
-@login_required(login_url='/')
-def search(request):
-    return render(request,'search.html')
 
 @login_required(login_url='/login')
 def productView(request,myid):
@@ -168,3 +160,46 @@ def checkout(request):
         id = order.order_id
         return render(request, 'checkout.html', {'thank':thank, 'id': id})
     return render(request, 'checkout.html')
+
+@login_required(login_url='/')
+# def myorder(request):
+#     user = request.user.id
+#     print(user)
+#     # orders = Order.objects.filter(user=user)
+#     orders = Order.objects.all()
+#     li=[]
+#     na=[]
+#     for i in orders:
+#         na.append(i.name)
+#         li.append(i.items_json)
+#     product_data=[json.loads(items) for items in li]
+#     for product_info in product_data:
+#         for product_key, product_value in product_info.items():
+#             print(f"Product ID: {product_key}, Quantity: {product_value[0]}, Description: {product_value[1]}")
+#             # If you only want to display the first product information, you can break the loop here
+#             break
+#     print(product_data)
+#     print(li)
+#     print(na)
+#     print(orders)
+#     dt = {'data': orders}
+#     return render(request, 'myorders.html', dt)
+def myorder(request):
+    user = request.user.id
+    # Assuming you have a model named 'Order' with 'name' and 'items_json' fields
+    # orders = Order.objects.filter(user=user)
+    orders = Order.objects.all()
+    orders_data = []
+
+    for order in orders:
+        order_data = {
+            
+            'name': order.name,
+            'items': json.loads(order.items_json)
+            
+        }
+        orders_data.append(order_data)
+        print(order_data.items)
+
+    context = {'orders_data': orders_data}
+    return render(request, 'myorders.html', context)

@@ -13,4 +13,5 @@ urlpatterns =[
     path('tracker',views.tracker,name='tracker'),
     path('prodview/<int:myid>',views.productView,name='prodview'),
     path('checkout',views.checkout),
+    path('myorder',views.myorder,name='myorder'),
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

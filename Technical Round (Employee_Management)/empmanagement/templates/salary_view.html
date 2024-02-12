@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block head %}
+{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <h2 class="mb-4">Salary Entry Details</h2>
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">{{ salary_entry.employee.name }}</h5>
+            <p class="card-text">Salary: {{ salary_entry.salary }}</p>
+            <p class="card-text">Date Range: {{ salary_entry.start_date }}  To {{ salary_entry.end_date }}</p>
+
+            <span class="crud">
+                <a href="{% url 'edit_salary_entry' salary_entry.id %}" class="btn btn-secondary">Edit</a>
+            </span>
+        </div>
+    </div>
+</div>
+{% endblock %}
